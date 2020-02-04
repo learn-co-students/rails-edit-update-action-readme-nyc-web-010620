@@ -22,7 +22,6 @@ class ArticlesController < ApplicationController
   end
 
 
-
   def create
     @article = Article.new
     @article.title = params[:title]
