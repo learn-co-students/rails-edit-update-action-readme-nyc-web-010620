@@ -12,12 +12,27 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new
-    @article.title = params[:title]
-    @article.description = params[:description]
-    @article.save
+    @article = Article.create!(article_params2)
     redirect_to article_path(@article)
   end
 
-  # add edit and update methods here
+  # You always have to pass in an instance in edit controller action
+  def edit 
+    @article = Article.find_by_id(params[:id])
+  end
+
+  def update
+    article = Article.find_by_id(params[:id])
+    article.update(article_params)
+    redirect_to article_path(article)
+  end
+
+  private
+  
+  def article_params
+    params.require(:article).permit(:title, :description)
+  end
+  def article_params2
+    params.permit(:title, :description)
+  end
 end
